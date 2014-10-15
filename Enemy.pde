@@ -8,19 +8,18 @@
  DESIGN BY RYAN MOCHAL
  http://thenounproject.com/term/bat/77722/
  */
- 
-
 
 class Enemy extends Entity {
   PShape bat;
   
   final int DIAMETER = 50;
+  final float MOVESPEED = 0.1; //Change to 2 later
+  
   float wanderX = random(-2, 2);
   float wanderY = random(-2, 2);
 
-
-  Enemy (int hp, float x, float y, float moveSpeed) {
-    super (hp, x, y, moveSpeed);
+  Enemy (int hp, float x, float y) {
+    super (hp, x, y);
     bat = loadShape("bat.svg");
     bat.disableStyle();
   }
@@ -29,9 +28,6 @@ class Enemy extends Entity {
     fill (150, 40, 40);
     shapeMode(CENTER);
     shape(bat, x, y, DIAMETER, DIAMETER);
-    //ellipse (x, y, DIAMETER, DIAMETER);
-    
-    
   }
 
   void update () {
@@ -39,8 +35,8 @@ class Enemy extends Entity {
   }
 
   void wander () {
-    x += wanderX;
-    y += wanderY;
+    x += wanderX * MOVESPEED;
+    y += wanderY * MOVESPEED;
 
     // Check bounds - Use ternary operators for conciseness
     wanderX = (x <= 0) ? 1 : wanderX;

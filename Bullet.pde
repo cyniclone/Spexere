@@ -3,7 +3,6 @@ class Bullet {
   float x, y;
   float xSpeed, ySpeed;
 
-
   Bullet (float x, float y, float xSpeed, float ySpeed) {
     this.x = x;
     this.y = y;

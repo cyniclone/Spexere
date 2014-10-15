@@ -2,6 +2,7 @@ class Block {
   float x, y;
   float side; // Side length
   float left, right, up, down;
+  
 
   Block (float x, float y, int side) {
     this.x = x;
@@ -11,10 +12,8 @@ class Block {
     this.left = x;
     this.right = x + side;
     this.up = y;
-    this.down = y - side;
+    this.down = y + side;
   }
-
-
 
   void display () {
     rectMode(CORNER);
