@@ -18,8 +18,8 @@ class Hero extends Entity {
     xDir = 0;
     yDir = 0;
   }
-  
-// ---------- DISPLAY METHOD ---------------------------------
+
+  // ---------- DISPLAY METHOD ---------------------------------
   void display() {
     fill (255);
     ellipse(x, y, DIAMETER, DIAMETER);
@@ -28,8 +28,8 @@ class Hero extends Entity {
       bullets.get(i).display();
     }
   }
-  
-// ---------- UPDATE VARIABLES AND POSITION --------------------
+
+  // ---------- UPDATE VARIABLES AND POSITION --------------------
   void update() {
     // Update position
     updatePosition();
@@ -63,30 +63,33 @@ class Hero extends Entity {
     y += yDir * MOVESPEED;
   }
 
-// ---------- HANDLE BLOCK COLLISION ------------------------------
+  // ---------- HANDLE BLOCK COLLISION ------------------------------
   void checkCollisionWith (Block block) {
-    //Touching top of hero
-    if (y - RADIUS <= block.down && y >= block.down) {
-      y = block.down + RADIUS;
-    }
+    if (dist(x, y, block.x + block.side/2, block.y + block.side/2) < RADIUS + block.side/2) {
 
-    //Touching bottom of hero
-    if (y + RADIUS >= block.up && y <= block.up) {
-      y = block.up - RADIUS;
-    }
+      //Touching top of hero
+      if (y - RADIUS <= block.down && y >= block.down) {
+        y = block.down + RADIUS;
+      }
 
-    //Touching left of hero
-    if (x - RADIUS <= block.right && x >= block.right) {
-      x = block.right + RADIUS;
-    }
+      //Touching bottom of hero
+      if (y + RADIUS >= block.up && y <= block.up) {
+        y = block.up - RADIUS;
+      }
 
-    //Touching right of hero
-    if (x + RADIUS >= block.left && x <= block.left) {
-      x = block.left - RADIUS;
+      //Touching left of hero
+      if (x - RADIUS <= block.right && x >= block.right) {
+        x = block.right + RADIUS;
+      }
+
+      //Touching right of hero
+      if (x + RADIUS >= block.left && x <= block.left) {
+        x = block.left - RADIUS;
+      }
     }
   }
-  
-// ---------- SHOOT BULLETS AND MANAGE BULLET ARRAYLIST --------------------
+
+  // ---------- SHOOT BULLETS AND MANAGE BULLET ARRAYLIST --------------------
   void shoot(float t) {
     // Make new bullet and add to arraylist
     // Use rCos(theta) = x and rSin(theta) = y
