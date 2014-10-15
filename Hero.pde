@@ -65,8 +65,9 @@ class Hero extends Entity {
 
   // ---------- HANDLE BLOCK COLLISION ------------------------------
   void checkCollisionWith (Block block) {
-    if (dist(x, y, block.x + block.side/2, block.y + block.side/2) < RADIUS + block.side/2) {
 
+    //Check vertical collision
+    if (abs(x - (block.x + block.side/2)) < (RADIUS + block.side/2)) {
       //Touching top of hero
       if (y - RADIUS <= block.down && y >= block.down) {
         y = block.down + RADIUS;
@@ -76,7 +77,10 @@ class Hero extends Entity {
       if (y + RADIUS >= block.up && y <= block.up) {
         y = block.up - RADIUS;
       }
+    }
 
+    //Check horizontal collision
+    if (abs(y - (block.y + block.side/2)) < (RADIUS + block.side/2)) {
       //Touching left of hero
       if (x - RADIUS <= block.right && x >= block.right) {
         x = block.right + RADIUS;
