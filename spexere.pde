@@ -11,13 +11,17 @@ Bullet bullet;
 Block block;
 ArrayList<Enemy> enemies;
 ArrayList<Block> blocks;
+final int TILE = 40; // Pixels per tile unit
 
 boolean keys[]; // For handling input
+
+// Maps
+XML map1;
 
 // ----------- SETUP ---------------------------------
 void setup () {
   //Set up display
-  size(800, 600);
+  size(800, 600); // Each map is 20 x 15 tiles
   background(50, 150, 50);
   smooth();
 
@@ -37,11 +41,28 @@ void setup () {
   // Initialize blocks
   blocks = new ArrayList<Block>();
 
-  //Make some blocks 
-  for (int i = 0; i < 3; i++) {
-    block = new Block((int) (i+5)*40, (int) 8*40, 40);
-    blocks.add(block);
+  // Load map and draw blocks
+  map1 = loadXML("map1.xml");
+  XML[] rows = map1.getChildren("row");
+  for (int row = 0; row < rows.length; row++) {
+    String s = rows[row].getContent();
+    for (int column = 0; column < s.length (); column++) {
+      if (s.charAt(column) == '@') {
+        
+        // Make a block
+        block = new Block (column*TILE, row*TILE, TILE); 
+        blocks.add(block);
+      }
+    }
   }
+
+  //  //Make some blocks 
+  //  for (int i = 0; i < 3; i++) {
+  //    block = new Block((int) (i+5)*TILE, (int) 8*TILE, TILE);
+  //    blocks.add(block);
+  //  }
+
+  // Load first map
 }
 
 // ----------- DRAW ---------------------------------

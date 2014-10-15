@@ -1,5 +1,5 @@
 class Hero extends Entity {
-  final int DIAMETER = 40;
+  final int DIAMETER = TILE;
   final int RADIUS = DIAMETER/2;
   final float MOVESPEED = 4;
 
@@ -45,10 +45,6 @@ class Hero extends Entity {
         bullets.get(i).y < 0 || bullets.get(i).y > height) {
         bullets.remove(i);
       }
-    }
-
-    if (frameCount % 5 == 0 ) { 
-      println(x + " " + y);
     }
 
     // Wrap-around coordinates
