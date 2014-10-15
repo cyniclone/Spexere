@@ -8,16 +8,10 @@
 Hero hero;
 Enemy enemy;
 Bullet bullet;
-
 Block block;
-float distFromNearestBlock = 9999;
-Block nearestBlock;
-
 ArrayList<Enemy> enemies;
 ArrayList<Block> blocks;
 final int TILE = 40; // Pixels per tile unit
-
-final boolean debug = true;
 
 boolean keys[]; // For handling input
 
@@ -54,7 +48,7 @@ void setup () {
     String s = rows[row].getContent();
     for (int column = 0; column < s.length (); column++) {
       if (s.charAt(column) == '@') {
-
+        
         // Make a block
         block = new Block (column*TILE, row*TILE, TILE); 
         blocks.add(block);
@@ -184,7 +178,7 @@ void display() {
       blocks.get(i).display();
     }
   }
-
+  
   //Display each enemy
   for (int i = 0; i < enemies.size (); i++) {
     enemies.get(i).display();
@@ -228,13 +222,7 @@ void checkCollision() {
 
   // Check player-block collision
   for (int i = 0; i < blocks.size (); i++) {
-    block = blocks.get(i);
-    if (dist(hero.x, hero.y, block.x+block.side/2, block.y+block.side/2) < distFromNearestBlock) {
-      distFromNearestBlock = dist(hero.x, hero.y, block.x+block.side/2, block.y+block.side/2);
-      nearestBlock = block;
-      println(distFromNearestBlock);
-    }
+    hero.checkCollisionWith(blocks.get(i));
   }
-  hero.checkCollisionWith(nearestBlock);
 }
 
