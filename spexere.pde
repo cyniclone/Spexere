@@ -215,7 +215,7 @@ void checkCollision() {
   // Check enemy-player collision
   for (int i = 0; i < enemies.size (); i++) {
     enemy = enemies.get(i);
-    if (dist(hero.x, hero.y, enemy.x, enemy.y) < hero.RADIUS + enemy.DIAMETER/2) {
+    if (dist(hero.x + hero.RADIUS, hero.y + hero.RADIUS, enemy.x, enemy.y) < hero.RADIUS + enemy.DIAMETER/2) {
       println("player hit");
     }
   }
