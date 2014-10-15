@@ -14,7 +14,7 @@ class Block {
     this.up = y;
     this.down = y + side;
   }
-
+// ---------- DISPLAY METHOD ---------------------------------
   void display () {
     rectMode(CORNER);
     fill(0, 0, 255, 200);

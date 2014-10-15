@@ -5,7 +5,6 @@
  
  */
 
-
 Hero hero;
 Enemy enemy;
 Bullet bullet;
@@ -14,7 +13,6 @@ ArrayList<Enemy> enemies;
 ArrayList<Block> blocks;
 
 boolean keys[]; // For handling input
-
 
 // ----------- SETUP ---------------------------------
 void setup () {
@@ -147,7 +145,6 @@ void mousePressed() {
   } 
 
   hero.shoot(t);
-
 }
 
 // ----------- GAME LOOP METHODS ----------------------------
@@ -161,7 +158,7 @@ void update() {
     enemies.get(i).update();
   }
 }
-
+// ---------- DISPLAY METHOD ---------------------------------
 void display() {
   hero.display();
   //Display each enemy
@@ -176,7 +173,7 @@ void display() {
     }
   }
 }
-
+// ---------- CHECK COLLISION ---------------------------------
 void checkCollision() {
 
   // Check enemy-bullet collision
@@ -207,7 +204,7 @@ void checkCollision() {
   // Check enemy-player collision
   for (int i = 0; i < enemies.size (); i++) {
     enemy = enemies.get(i);
-    if (dist(hero.x, hero.y, enemy.x, enemy.y) < hero.DIAMETER/2 + enemy.DIAMETER/2) {
+    if (dist(hero.x, hero.y, enemy.x, enemy.y) < hero.RADIUS + enemy.DIAMETER/2) {
       println("player hit");
     }
   }

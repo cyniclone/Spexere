@@ -10,16 +10,18 @@ class Bullet {
     this.ySpeed = ySpeed;
   }
 
-  void update() {
-    x += xSpeed;
-    y += ySpeed;
-  }
-
+  // ---------- DISPLAY METHOD ---------------------------------
   void display() {
     rectMode(CENTER);
     fill(random(100, 255), random(200, 255), random(100, 255));
-    
+
     rect(x, y, DIAMETER, DIAMETER);
+  }
+
+  // ---------- UPDATE VARIABLES AND POSITION --------------------
+  void update() {
+    x += xSpeed;
+    y += ySpeed;
   }
 }
 

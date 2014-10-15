@@ -23,13 +23,15 @@ class Enemy extends Entity {
     bat = loadShape("bat.svg");
     bat.disableStyle();
   }
-
+  
+// ---------- DISPLAY METHOD ---------------------------------
   void display () {
     fill (150, 40, 40);
     shapeMode(CENTER);
     shape(bat, x, y, DIAMETER, DIAMETER);
   }
-
+  
+// ---------- UPDATE VARIABLES AND POSITION --------------------
   void update () {
     wander();
   }
@@ -48,10 +50,6 @@ class Enemy extends Entity {
       wanderX = random(-2, 2);
       wanderY = random(-2, 2);
     }
-  }
-
-  void die () {
-    
   }
 }
 
