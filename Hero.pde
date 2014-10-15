@@ -44,6 +44,10 @@ class Hero extends Entity {
       }
     }
 
+    if (frameCount % 5 == 0 ) { 
+      println(x + " " + y);
+    }
+
     // Wrap-around coordinates
     x = (x < 0) ? width : x;
     x = (x > width) ? 0 : x;
@@ -54,10 +58,9 @@ class Hero extends Entity {
   void updatePosition () {
     x += xDir * MOVESPEED;
     y += yDir * MOVESPEED;
-
   }
 
-  //Handle Collision
+  //Handle Collision with blocks
   void checkCollisionWith (Block block) {
     //Touching top of hero
     if (y - DIAMETER/2 <= block.down && y >= block.y + block.side) {

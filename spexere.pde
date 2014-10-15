@@ -15,6 +15,8 @@ ArrayList<Block> blocks;
 
 boolean keys[]; // For handling input
 
+
+// ----------- SETUP ---------------------------------
 void setup () {
   //Set up display
   size(800, 600);
@@ -38,11 +40,13 @@ void setup () {
   blocks = new ArrayList<Block>();
 
   //Make some blocks 
-  for (int i = 0; i < 1; i++) {
+  for (int i = 0; i < 3; i++) {
     block = new Block((int) (i+5)*40, (int) 8*40, 40);
     blocks.add(block);
   }
 }
+
+// ----------- DRAW ---------------------------------
 
 void draw () {
   background(50, 150, 50);
@@ -62,18 +66,18 @@ void draw () {
   // Handle Input
   handleInput();
 
-  // Check Collision
-  checkCollision();
-
   // Update variables
   update();
+
+  // Check Collision
+  checkCollision();
 
   // Render
   display();
 }
 
 
-//  INPUT HANDLING -------------------------------------------
+//  ----------- INPUT HANDLING ---------------------------------
 void handleInput() {
   // For our array:
   // keys[0] = UP, [1] = DOWN, [2] = LEFT, and [3] = RIGHT
@@ -102,42 +106,33 @@ void keyPressed() {
   case UP:
     keys[0] = true;
     break;
-
   case DOWN:
     keys[1] = true;
     break;
-
   case LEFT:
     keys[2] = true;
     break;
-
   case RIGHT:
     keys[3] = true;
     break;
   }
 }
-
 void keyReleased() {
   switch (keyCode) {
   case UP:
     keys[0] = false;
     break;
-
   case DOWN:
     keys[1] = false;
     break;
-
   case LEFT:
     keys[2] = false;
     break;
-
   case RIGHT:
     keys[3] = false;
     break;
   }
 }
-
-//Check if a bullet was shot
 void mousePressed() {
   // First we get the angle t (theta)
   // Tangent == opposite/adjacent to get angle
@@ -153,11 +148,9 @@ void mousePressed() {
 
   hero.shoot(t);
 
-  /*loadPixels();
-   println(pixels[width*mouseY + mouseX]);*/
 }
 
-// ----GAME LOOP METHODS ----------------------------
+// ----------- GAME LOOP METHODS ----------------------------
 
 void update() {
   //Update hero
@@ -212,7 +205,6 @@ void checkCollision() {
   }
 
   // Check enemy-player collision
-
   for (int i = 0; i < enemies.size (); i++) {
     enemy = enemies.get(i);
     if (dist(hero.x, hero.y, enemy.x, enemy.y) < hero.DIAMETER/2 + enemy.DIAMETER/2) {
