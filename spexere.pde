@@ -55,14 +55,6 @@ void setup () {
       }
     }
   }
-
-  //  //Make some blocks 
-  //  for (int i = 0; i < 3; i++) {
-  //    block = new Block((int) (i+5)*TILE, (int) 8*TILE, TILE);
-  //    blocks.add(block);
-  //  }
-
-  // Load first map
 }
 
 // ----------- DRAW ---------------------------------
@@ -159,11 +151,8 @@ void mousePressed() {
   float dy = hero.y - mouseY; //Height of right triangle
   float t = 0;
 
-  if (dx >= 0) { 
-    t = (atan(dy/dx));
-  } else {
-    t = (PI + atan(dy/dx));
-  } 
+  t = atan(dy/dx);
+  t = (dx <= 0) ? t + PI : t;
 
   hero.shoot(t);
 }
@@ -182,16 +171,17 @@ void update() {
 // ---------- DISPLAY METHOD ---------------------------------
 void display() {
   hero.display();
-  //Display each enemy
-  for (int i = 0; i < enemies.size (); i++) {
-    enemies.get(i).display();
-  }
 
   //Display blocks
   for (int i = 0; i < blocks.size (); i++) {
     if (blocks.size() > 0) {
       blocks.get(i).display();
     }
+  }
+  
+  //Display each enemy
+  for (int i = 0; i < enemies.size (); i++) {
+    enemies.get(i).display();
   }
 }
 // ---------- CHECK COLLISION ---------------------------------
@@ -207,7 +197,7 @@ void checkCollision() {
       if (dist(bullet.x, bullet.y, enemy.x, enemy.y) < bullet.DIAMETER/2 + enemy.DIAMETER/2)
       {
 
-        //remove enemy from arraylist
+        //remove enemy and bullet from arraylist
         if (enemies.size() > 0) {
           enemies.remove(j);
         }
@@ -215,7 +205,7 @@ void checkCollision() {
           hero.bullets.remove(i);
         }
 
-        // add a new enemy
+        // Add a new enemy
         enemy = new Enemy(5, 500, 300 + random(0, 200));
         enemies.add(enemy);
       }
