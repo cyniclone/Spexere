@@ -2,7 +2,7 @@ class Block {
   float x, y;
   float side; // Side length
   float left, right, up, down;
-  
+
 
   Block (float x, float y, int side) {
     this.x = x;
@@ -14,10 +14,14 @@ class Block {
     this.up = y;
     this.down = y + side;
   }
-// ---------- DISPLAY METHOD ---------------------------------
+  // ---------- DISPLAY METHOD ---------------------------------
   void display () {
     rectMode(CORNER);
     fill(0, 0, 255, 200);
+
+    if (debug) {
+      stroke (0, 255, 0);
+    }
     rect(x, y, side, side);
   }
 }

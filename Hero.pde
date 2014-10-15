@@ -23,6 +23,12 @@ class Hero extends Entity {
   void display() {
     fill (255);
     ellipse(x, y, DIAMETER, DIAMETER);
+    
+    if (debug) {
+      stroke (255, 0, 0);
+      rect(x - RADIUS, y - RADIUS, DIAMETER, DIAMETER);
+    }
+
 
     for (int i = 0; i < bullets.size (); i++) {
       bullets.get(i).display();
