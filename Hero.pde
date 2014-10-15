@@ -66,16 +66,12 @@ class Hero extends Entity {
     if (abs(x - (block.x + block.side/2)) < (RADIUS + block.side/2)) {
       //Touching top of hero
       if (y - RADIUS <= block.down && y >= block.down) {
-        println("Touching top at " + x + ", " + y);
         y = block.down + RADIUS;
-        
       }
 
       //Touching bottom of hero
       if (y + RADIUS >= block.up && y <= block.up) {
-        println("Touching bottom at " + x + ", " + y);
         y = block.up - RADIUS;
-        
       }
     }
 
@@ -83,13 +79,11 @@ class Hero extends Entity {
     if (abs(y - (block.y + block.side/2)) < (RADIUS + block.side/2)) {
       //Touching left of hero
       if (x - RADIUS <= block.right && x >= block.right) {
-        println("Touching left at " + x + ", " + y);
         x = block.right + RADIUS;
       }
 
       //Touching right of hero
       if (x + RADIUS >= block.left && x <= block.left) {
-        println("Touching right at " + x + ", " + y);
         x = block.left - RADIUS;
       }
     }
