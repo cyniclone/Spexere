@@ -94,22 +94,22 @@ void handleInput() {
   // keys[0] = UP, [1] = DOWN, [2] = LEFT, and [3] = RIGHT
 
   if (keys[0]) {
-    hero.yDir = -1;
+    hero.vy = -1;
   }
   if (keys[1]) {
-    hero.yDir = 1;
+    hero.vy = 1;
   }
   if (!keys[0] && !keys[1]) { 
-    hero.yDir = 0;
+    hero.vy = 0;
   }
   if (keys[2]) {
-    hero.xDir = -1;
+    hero.vx = -1;
   }
   if (keys[3]) {
-    hero.xDir = 1;
+    hero.vx = 1;
   }
   if (!keys[2] && !keys[3]) {
-    hero.xDir = 0;
+    hero.vx = 0;
   }
 }
 void keyPressed() {

@@ -8,15 +8,15 @@ class Hero extends Entity {
 
   boolean hit; // Stays true for about one second
   float frameWhenHit; //Frame when the player was hit
-  int xDir, yDir;
+  int vx, vy;
 
   // Constructor
   Hero (int hp, float x, float y) {
     super (hp, x, y);
     bullets = new ArrayList<Bullet>();
     hit = false;
-    xDir = 0;
-    yDir = 0;
+    vx = 0;
+    vy = 0;
   }
 
   // ---------- DISPLAY METHOD ---------------------------------
@@ -56,8 +56,8 @@ class Hero extends Entity {
   }
 
   void updatePosition () {
-    x += xDir * MOVESPEED;
-    y += yDir * MOVESPEED;
+    x += vx * MOVESPEED;
+    y += vy * MOVESPEED;
   }
 
   // ---------- HANDLE BLOCK COLLISION ------------------------------
