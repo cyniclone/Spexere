@@ -18,6 +18,7 @@ class Block {
   void display () {
     rectMode(CORNER);
     fill(0, 0, 255, 200);
+    stroke(255);
     rect(x, y, side, side);
   }
 }

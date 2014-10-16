@@ -94,22 +94,22 @@ void handleInput() {
   // keys[0] = UP, [1] = DOWN, [2] = LEFT, and [3] = RIGHT
 
   if (keys[0]) {
-    hero.vy = -1;
+    hero.dy = -1;
   }
   if (keys[1]) {
-    hero.vy = 1;
+    hero.dy = 1;
   }
   if (!keys[0] && !keys[1]) { 
-    hero.vy = 0;
+    hero.dy = 0;
   }
   if (keys[2]) {
-    hero.vx = -1;
+    hero.dx = -1;
   }
   if (keys[3]) {
-    hero.vx = 1;
+    hero.dx = 1;
   }
   if (!keys[2] && !keys[3]) {
-    hero.vx = 0;
+    hero.dx = 0;
   }
 }
 void keyPressed() {
@@ -147,12 +147,12 @@ void keyReleased() {
 void mousePressed() {
   // First we get the angle t (theta)
   // Tangent == opposite/adjacent to get angle
-  float dx = mouseX - hero.x; //Base of right triangle
-  float dy = hero.y - mouseY; //Height of right triangle
+  float distX = mouseX - hero.x; //Base of right triangle
+  float distY = hero.y - mouseY; //Height of right triangle
   float t = 0;
 
-  t = atan(dy/dx);
-  t = (dx <= 0) ? t + PI : t;
+  t = atan(distY/distX);
+  t = (distX <= 0) ? t + PI : t;
 
   hero.shoot(t);
 }

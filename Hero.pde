@@ -12,7 +12,8 @@ class Hero extends Entity {
   boolean moving; // Animates sprite when true
   boolean flipImage;
   float frameWhenHit; //Frame when the player was hit
-  int vx, vy;
+  float vx, vy; // Velocity
+  int dx, dy; // Direction
 
   // Constructor
   Hero (int hp, float x, float y) {
@@ -21,6 +22,8 @@ class Hero extends Entity {
     hit = false;
     moving = false;
     flipImage = false;
+    dx = 0;
+    dy = 0;
     vx = 0;
     vy = 0;
 
@@ -29,20 +32,20 @@ class Hero extends Entity {
 
   // ---------- DISPLAY METHOD ---------------------------------
   void display() {
-    fill (255);
-    //ellipse(x, y, DIAMETER, DIAMETER);
-    //rect (x - RADIUS, y - RADIUS, DIAMETER, DIAMETER);
+    // Shadow beneath sprite
+    fill (60, 60, 60, 100);
+    noStroke();
+    ellipse(x + RADIUS, y + 30, 35, 20);
 
+    // Animates sprite based on velocity
     if (vx != 0 || vy != 0) {
       moving = true;
     } else { 
       moving = false;
     }
-
     if (frameCount % 20 == 0) {
       flipImage = !flipImage;
     }
-
     if (flipImage && moving) {
       pushMatrix();
       scale(-1, 1);
@@ -52,7 +55,7 @@ class Hero extends Entity {
       image(heroImg, x, y);
     }
 
-
+    //Display bullets
     for (int i = 0; i < bullets.size (); i++) {
       bullets.get(i).display();
     }
@@ -60,7 +63,7 @@ class Hero extends Entity {
 
   // ---------- UPDATE VARIABLES AND POSITION --------------------
   void update() {
-    // Update position
+    updateVelocity();
     updatePosition();
 
     // Update bullet coordinates
@@ -82,10 +85,13 @@ class Hero extends Entity {
     y = (y < 0) ? height : y;
     y = (y > height) ? 0 : y;
   }
-
+  void updateVelocity() {
+    vx = dx * MOVESPEED;
+    vy = dy * MOVESPEED;
+  }
   void updatePosition () {
-    x += vx * MOVESPEED;
-    y += vy * MOVESPEED;
+    x += vx;
+    y += vy;
   }
 
   // ---------- HANDLE BLOCK COLLISION ------------------------------
@@ -94,13 +100,13 @@ class Hero extends Entity {
     //Check vertical collision
     if (abs(x - (block.x + block.side/2)) < (RADIUS + block.side/2)) {
       //Touching top of hero
-      if (y - RADIUS <= block.down && y >= block.down) {
-        y = block.down + RADIUS;
+      if (y - DIAMETER <= block.down && y >= block.down) {
+        y = block.down + DIAMETER;
       }
 
       //Touching bottom of hero
-      if (y + RADIUS >= block.up && y <= block.up) {
-        y = block.up - RADIUS;
+      if (y + DIAMETER >= block.up && y <= block.up) {
+        y = block.up - DIAMETER;
       }
     }
 
