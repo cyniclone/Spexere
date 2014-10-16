@@ -1,4 +1,6 @@
 class Hero extends Entity {
+  PImage heroImg;
+
   final int DIAMETER = TILE;
   final int RADIUS = DIAMETER/2;
   final float MOVESPEED = 4;
@@ -7,6 +9,8 @@ class Hero extends Entity {
   ArrayList<Bullet> bullets; 
 
   boolean hit; // Stays true for about one second
+  boolean moving; // Animates sprite when true
+  boolean flipImage;
   float frameWhenHit; //Frame when the player was hit
   int vx, vy;
 
@@ -15,15 +19,39 @@ class Hero extends Entity {
     super (hp, x, y);
     bullets = new ArrayList<Bullet>();
     hit = false;
+    moving = false;
+    flipImage = false;
     vx = 0;
     vy = 0;
+
+    heroImg = loadImage("hero.png");
   }
 
   // ---------- DISPLAY METHOD ---------------------------------
   void display() {
     fill (255);
     //ellipse(x, y, DIAMETER, DIAMETER);
-    rect (x - RADIUS, y - RADIUS, DIAMETER, DIAMETER);
+    //rect (x - RADIUS, y - RADIUS, DIAMETER, DIAMETER);
+
+    if (vx != 0 || vy != 0) {
+      moving = true;
+    } else { 
+      moving = false;
+    }
+
+    if (frameCount % 20 == 0) {
+      flipImage = !flipImage;
+    }
+
+    if (flipImage) {
+      pushMatrix();
+      scale(-1, 1);
+      image(heroImg, -x - heroImg.width, y);
+      popMatrix();
+    } else {
+      image(heroImg, x, y);
+    }
+
 
     for (int i = 0; i < bullets.size (); i++) {
       bullets.get(i).display();
@@ -103,3 +131,4 @@ class Hero extends Entity {
     }
   }
 }
+
