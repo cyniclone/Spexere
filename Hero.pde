@@ -30,7 +30,7 @@ class Hero extends Entity {
     hit = false;
     moving = false;
     flipImage = false;
-    
+
     dx = 0;
     dy = 0;
     vx = 0;
@@ -124,10 +124,18 @@ class Hero extends Entity {
   float normaly = 0;
 
   // ----- DETECTION -----
+  // Check if collision happened
+  boolean checkAABB (Hero b1, Block b2)
+    {
+        return !(b1.x + b1.w < b2.x || b1.x > b2.x + b2.w || b1.y + b1.h < b2.y || b1.y > b2.y + b2.h);
+    }
+ 
   // Returns time that collision occurred 
   float sweptAABB (Hero b1, Block b2) {
     float xInvEntry, yInvEntry;
     float xInvExit, yInvExit;
+    //    println("hero " + b1.x + ", " + b1.y + " velocity " + b1.vx + ", " + b1.vy + " w/h: " + b1.w + ", " + b1.h);
+    //    println("bloc " + b2.x + ", " + b2.y + " w/h: " + b2.w + ", " + b2.h);
 
     // find the distance between the objects on the near and far sides for both x and y
     if (b1.vx > 0.0f)
@@ -150,7 +158,8 @@ class Hero extends Entity {
       yInvExit = b2.y - (b1.y + b1.h);
     }
 
-    // find time of collision and time of leaving for each axis (if statement is to prevent divide by zero)
+    // find time of collision and time of exit for each axis 
+    // (if statement is to prevent divide by zero)
     float xEntry, yEntry;
     float xExit, yExit;
 
@@ -181,6 +190,7 @@ class Hero extends Entity {
     // if there was no collision
     if (entryTime > exitTime || xEntry < 0.0f && yEntry < 0.0f || xEntry > 1.0f || yEntry > 1.0f)
     {
+      println("entry time: " + entryTime + ", exit time: " + exitTime);
       normalx = 0.0f;
       normaly = 0.0f;
       return 1.0f;

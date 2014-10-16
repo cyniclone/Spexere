@@ -48,7 +48,7 @@ void setup () {
     String s = rows[row].getContent();
     for (int column = 0; column < s.length (); column++) {
       if (s.charAt(column) == '@') {
-        
+
         // Make a block
         block = new Block (column*TILE, row*TILE, TILE); 
         blocks.add(block);
@@ -178,7 +178,7 @@ void display() {
       blocks.get(i).display();
     }
   }
-  
+
   //Display each enemy
   for (int i = 0; i < enemies.size (); i++) {
     enemies.get(i).display();
@@ -223,10 +223,13 @@ void checkCollision() {
   // Check player-block collision
   for (int i = 0; i < blocks.size (); i++) {
     block = blocks.get(i);
-    
+
     //Each block is only a candidate for collision if it's within 50 pixels of our hero
     if (dist(hero.x + hero.w/2, hero.y + hero.h/2, block.x + block.w/2, block.y + block.h/2) < 50) {
-      
+      // Check collision
+      if (hero.checkAABB(hero, block)) {
+        println(hero.sweptAABB(hero, block));
+      }
     }
   }
 }
