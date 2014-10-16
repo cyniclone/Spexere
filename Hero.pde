@@ -43,7 +43,7 @@ class Hero extends Entity {
       flipImage = !flipImage;
     }
 
-    if (flipImage) {
+    if (flipImage && moving) {
       pushMatrix();
       scale(-1, 1);
       image(heroImg, -x - heroImg.width, y);
