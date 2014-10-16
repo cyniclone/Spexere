@@ -1,8 +1,16 @@
+/*
+   Collision detection using SweptAABB tutorial from 
+ gamedev.net
+ http://bit.ly/1wdxc7v
+ */
+
 class Hero extends Entity {
   PImage heroImg;
 
   final int DIAMETER = TILE;
   final int RADIUS = DIAMETER/2;
+  final int w = DIAMETER;
+  final int h = DIAMETER;
   final float MOVESPEED = 4;
 
   final float BULLET_SPEED = 8;
@@ -22,6 +30,7 @@ class Hero extends Entity {
     hit = false;
     moving = false;
     flipImage = false;
+    
     dx = 0;
     dy = 0;
     vx = 0;
@@ -94,36 +103,6 @@ class Hero extends Entity {
     y += vy;
   }
 
-  // ---------- HANDLE BLOCK COLLISION ------------------------------
-  void checkCollisionWith (Block block) {
-
-    //Check vertical collision
-    if (abs(x - (block.x + block.side/2)) < (RADIUS + block.side/2)) {
-      //Touching top of hero
-      if (y - DIAMETER <= block.down && y >= block.down) {
-        y = block.down + DIAMETER;
-      }
-
-      //Touching bottom of hero
-      if (y + DIAMETER >= block.up && y <= block.up) {
-        y = block.up - DIAMETER;
-      }
-    }
-
-    //Check horizontal collision
-    if (abs(y - (block.y + block.side/2)) < (RADIUS + block.side/2)) {
-      //Touching left of hero
-      if (x - RADIUS <= block.right && x >= block.right) {
-        x = block.right + RADIUS;
-      }
-
-      //Touching right of hero
-      if (x + RADIUS >= block.left && x <= block.left) {
-        x = block.left - RADIUS;
-      }
-    }
-  }
-
   // ---------- SHOOT BULLETS AND MANAGE BULLET ARRAYLIST --------------------
   void shoot(float t) {
     // Make new bullet and add to arraylist
@@ -136,5 +115,114 @@ class Hero extends Entity {
       bullets.add(b);
     }
   }
+
+  // ---------- HANDLE BLOCK COLLISION ------------------------------
+  // USING AXIS-ALIGNED BOUNDING BOX ALGORITHM
+  // From gamedev.net
+  // http://bit.ly/1wdxc7v
+  float normalx = 0;
+  float normaly = 0;
+
+  // ----- DETECTION -----
+  // Returns time that collision occurred 
+  float sweptAABB (Hero b1, Block b2) {
+    float xInvEntry, yInvEntry;
+    float xInvExit, yInvExit;
+
+    // find the distance between the objects on the near and far sides for both x and y
+    if (b1.vx > 0.0f)
+    {
+      xInvEntry = b2.x - (b1.x + b1.w);
+      xInvExit = (b2.x + b2.w) - b1.x;
+    } else
+    {
+      xInvEntry = (b2.x + b2.w) - b1.x;
+      xInvExit = b2.x - (b1.x + b1.w);
+    }
+
+    if (b1.vy > 0.0f)
+    {
+      yInvEntry = b2.y - (b1.y + b1.h);
+      yInvExit = (b2.y + b2.h) - b1.y;
+    } else
+    {
+      yInvEntry = (b2.y + b2.h) - b1.y;
+      yInvExit = b2.y - (b1.y + b1.h);
+    }
+
+    // find time of collision and time of leaving for each axis (if statement is to prevent divide by zero)
+    float xEntry, yEntry;
+    float xExit, yExit;
+
+    if (b1.vx == 0.0f)
+    {
+      xEntry = -tan(HALF_PI); // Negative infinity
+      xExit = tan(HALF_PI); // Positive infinity
+    } else
+    {
+      xEntry = xInvEntry / b1.vx;
+      xExit = xInvExit / b1.vx;
+    }
+
+    if (b1.vy == 0.0f)
+    {
+      yEntry = -tan(HALF_PI);
+      yExit = tan(HALF_PI);
+    } else
+    {
+      yEntry = yInvEntry / b1.vy;
+      yExit = yInvExit / b1.vy;
+    }
+
+    // find the earliest/latest times of collision
+    float entryTime = max(xEntry, yEntry);
+    float exitTime = min(xExit, yExit);
+
+    // if there was no collision
+    if (entryTime > exitTime || xEntry < 0.0f && yEntry < 0.0f || xEntry > 1.0f || yEntry > 1.0f)
+    {
+      normalx = 0.0f;
+      normaly = 0.0f;
+      return 1.0f;
+    } else // if there was a collision
+    {
+      // calculate normal of collided surface
+      if (xEntry > yEntry)
+      {
+        if (xInvEntry < 0.0f)
+        {
+          normalx = 1.0f;
+          normaly = 0.0f;
+        } else
+        {
+          normalx = -1.0f;
+          normaly = 0.0f;
+        }
+      } else
+      {
+        if (yInvEntry < 0.0f)
+        {
+          normalx = 0.0f;
+          normaly = 1.0f;
+        } else
+        {
+          normalx = 0.0f;
+          normaly = -1.0f;
+        }
+      }
+
+      // return the time of collision
+      return entryTime;
+    }
+  }
+
+  // ----- RESOLVING COLLISION -----
+  void slide (float collisionTime) {
+    float dotprod = (vx * normaly + vy * normalx) * (1.0f - collisionTime);
+    vx = dotprod * normaly;
+    vy = dotprod * normalx;
+  }
+
+  // Sliding along wall
 }
 

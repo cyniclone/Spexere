@@ -1,5 +1,6 @@
 class Block {
   float x, y;
+  float w, h;
   float side; // Side length
   float left, right, up, down;
   
@@ -8,6 +9,8 @@ class Block {
     this.x = x;
     this.y = y;
     this.side = side;
+    w = side;
+    h = side;
 
     this.left = x;
     this.right = x + side;

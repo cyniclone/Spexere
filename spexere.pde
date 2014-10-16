@@ -222,7 +222,12 @@ void checkCollision() {
 
   // Check player-block collision
   for (int i = 0; i < blocks.size (); i++) {
-    hero.checkCollisionWith(blocks.get(i));
+    block = blocks.get(i);
+    
+    //Each block is only a candidate for collision if it's within 50 pixels of our hero
+    if (dist(hero.x + hero.w/2, hero.y + hero.h/2, block.x + block.w/2, block.y + block.h/2) < 50) {
+      
+    }
   }
 }
 
