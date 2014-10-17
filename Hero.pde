@@ -135,7 +135,7 @@ class Hero extends Entity {
   float sweptAABB (Hero b1, Block b2) {
     float xInvEntry, yInvEntry;
     float xInvExit, yInvExit;
-    println("hero " + b1.x + ", " + b1.y + " velocity " + b1.vx + ", " + b1.vy + " w/h: " + b1.w + ", " + b1.h);
+//    println("hero " + b1.x + ", " + b1.y + " velocity " + b1.vx + ", " + b1.vy + " w/h: " + b1.w + ", " + b1.h);
     //println("bloc " + b2.x + ", " + b2.y + " w/h: " + b2.w + ", " + b2.h);
 
     // find the distance between the objects on the near and far sides for both x and y
@@ -159,14 +159,14 @@ class Hero extends Entity {
       yInvExit = b2.y - (b1.y + b1.h);
     }
 
-    if (abs (xInvEntry) < 1 || abs (xInvExit) < 1 || abs (yInvEntry) < 1 || abs (yInvExit) < 1) {
-      if (! (xInvEntry == 0 && xInvExit ==0)) {
-        if (! (yInvEntry == 0 && yInvExit == 0)) {
-          println("xInvEntry and Exit: " + xInvEntry + ", " + xInvExit);
-          println("yInvEntry and Exit: " + yInvEntry + ", " + yInvExit);
-        }
-      }
-    }
+//    if (abs (xInvEntry) < 1 || abs (xInvExit) < 1 || abs (yInvEntry) < 1 || abs (yInvExit) < 1) {
+//      if (! (xInvEntry == 0 && xInvExit ==0)) {
+//        if (! (yInvEntry == 0 && yInvExit == 0)) {
+//          println("xInvEntry and Exit: " + xInvEntry + ", " + xInvExit);
+//          println("yInvEntry and Exit: " + yInvEntry + ", " + yInvExit);
+//        }
+//      }
+//    }
 
     // find time of collision and time of exit for each axis 
     // (if statement is to prevent divide by zero)
@@ -189,22 +189,22 @@ class Hero extends Entity {
       yExit = tan(HALF_PI);
     } else
     {
-      yEntry = yInvEntry / b1.vy;
-      yExit = yInvExit / b1.vy;
+      yEntry = yInvEntry / b1.vy / 10;
+      yExit = yInvExit / b1.vy / 10;
     }
 
-    if (abs (xEntry) < 1 || abs (yEntry) < 1) {
-      println("xEntry and Exit: " + xEntry + ", " + xExit);
-      println("yEntry and Exit: " + yEntry + ", " + yExit);
-    }
+//    if (abs (xEntry) < 1 || abs (yEntry) < 1) {
+//      println("xEntry and Exit: " + xEntry + ", " + xExit);
+//      println("yEntry and Exit: " + yEntry + ", " + yExit);
+//    }
 
     // find the earliest/latest times of collision
     float entryTime = max(xEntry, yEntry);
     float exitTime = min(xExit, yExit);
 
-    if (abs (entryTime) < 1 || abs (exitTime) < 1) {
-      println("Entry and Exit times: " + entryTime + ", " + exitTime);
-    }
+//    if (abs (entryTime) < 1 || abs (exitTime) < 1) {
+//      println("Entry and Exit times: " + entryTime + ", " + exitTime);
+//    }
 
     // if there was no collision
     if (entryTime > exitTime || xEntry < 0.0f && yEntry < 0.0f || xEntry > 1.0f || yEntry > 1.0f)
@@ -242,7 +242,7 @@ class Hero extends Entity {
       }
 
       // return the time of collision
-
+      println(entryTime);
       return entryTime;
     }
   }

@@ -237,7 +237,7 @@ void checkCollision() {
      if (hero.checkAABB (hero, block)) {
       // Check collision
 
-      println(hero.sweptAABB(hero, block));
+      float m = hero.sweptAABB(hero, block);
     }
   }
 }
