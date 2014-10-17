@@ -158,6 +158,7 @@ class Hero extends Entity {
       yInvEntry = (b2.y + b2.h) - b1.y;
       yInvExit = b2.y - (b1.y + b1.h);
     }
+<<<<<<< HEAD
 
 //    if (abs (xInvEntry) < 1 || abs (xInvExit) < 1 || abs (yInvEntry) < 1 || abs (yInvExit) < 1) {
 //      if (! (xInvEntry == 0 && xInvExit ==0)) {
@@ -167,6 +168,8 @@ class Hero extends Entity {
 //        }
 //      }
 //    }
+=======
+>>>>>>> parent of 70a2bed... logging more variables for debug
 
     // find time of collision and time of exit for each axis 
     // (if statement is to prevent divide by zero)
@@ -192,24 +195,30 @@ class Hero extends Entity {
       yEntry = yInvEntry / b1.vy / 10;
       yExit = yInvExit / b1.vy / 10;
     }
+<<<<<<< HEAD
 
 //    if (abs (xEntry) < 1 || abs (yEntry) < 1) {
 //      println("xEntry and Exit: " + xEntry + ", " + xExit);
 //      println("yEntry and Exit: " + yEntry + ", " + yExit);
 //    }
+=======
+>>>>>>> parent of 70a2bed... logging more variables for debug
 
     // find the earliest/latest times of collision
     float entryTime = max(xEntry, yEntry);
     float exitTime = min(xExit, yExit);
+<<<<<<< HEAD
 
 //    if (abs (entryTime) < 1 || abs (exitTime) < 1) {
 //      println("Entry and Exit times: " + entryTime + ", " + exitTime);
 //    }
+=======
+>>>>>>> parent of 70a2bed... logging more variables for debug
 
     // if there was no collision
     if (entryTime > exitTime || xEntry < 0.0f && yEntry < 0.0f || xEntry > 1.0f || yEntry > 1.0f)
     {
-      //println("entry time: " + entryTime + ", exit time: " + exitTime);
+      println("entry time: " + entryTime + ", exit time: " + exitTime);
       normalx = 0.0f;
       normaly = 0.0f;
 
@@ -248,11 +257,19 @@ class Hero extends Entity {
   }
 
   // ----- RESOLVING COLLISION -----
+<<<<<<< HEAD
   //  void slide (float collisionTime) {
   //    float dotprod = (vx * normaly + vy * normalx) * (1.0f - collisionTime);
   //    vx = dotprod * normaly;
   //    vy = dotprod * normalx;
   //  }
+=======
+  void slide (float collisionTime) {
+    float dotprod = (vx * normaly + vy * normalx) * (1.0f - collisionTime);
+    vx = dotprod * normaly;
+    vy = dotprod * normalx;
+  }
+>>>>>>> parent of 70a2bed... logging more variables for debug
 
   // Sliding along wall
 }
