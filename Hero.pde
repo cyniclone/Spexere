@@ -202,7 +202,7 @@ class Hero extends Entity {
     float entryTime = max(xEntry, yEntry);
     float exitTime = min(xExit, yExit);
 
-    if (entryTime < 1 || exitTime < 1) {
+    if (abs (entryTime) < 1 || abs (exitTime) < 1) {
       println("Entry and Exit times: " + entryTime + ", " + exitTime);
     }
 
