@@ -81,7 +81,7 @@ void draw () {
   update();
 
   // Check Collision
-  checkCollision();
+
 
   // Render
   display();
@@ -160,12 +160,20 @@ void mousePressed() {
 // ----------- GAME LOOP METHODS ----------------------------
 
 void update() {
-  //Update hero
-  hero.update();
+  float t = 0; // For timestepping
+  float dt = 1;
 
-  // Update each enemy
-  for (int i = 0; i < enemies.size (); i++) {
-    enemies.get(i).update();
+  //Update hero
+  while (t <= 10) {
+    hero.update();
+    checkCollision();
+    
+    // Update each enemy
+    for (int i = 0; i < enemies.size (); i++) {
+      enemies.get(i).update();
+    }
+    
+    t += dt;
   }
 }
 // ---------- DISPLAY METHOD ---------------------------------
@@ -225,11 +233,11 @@ void checkCollision() {
     block = blocks.get(i);
 
     //Each block is only a candidate for collision if it's within 50 pixels of our hero
-    if (dist(hero.x + hero.w/2, hero.y + hero.h/2, block.x + block.w/2, block.y + block.h/2) < 50) {
+    //if (dist(hero.x + hero.w/2, hero.y + hero.h/2, block.x + block.w/2, block.y + block.h/2) < 100) {
+     if (hero.checkAABB (hero, block)) {
       // Check collision
-      if (hero.checkAABB(hero, block)) {
-        println(hero.sweptAABB(hero, block));
-      }
+
+      println(hero.sweptAABB(hero, block));
     }
   }
 }
