@@ -66,22 +66,11 @@ void draw () {
   stroke(200);
   fill(0);
 
-  // Make some blocks
-  //  if (frameCount % 60 == 0) {
-  //
-  //    block = new Block((int) random(0, width/40)*40, (int) random(0, height/40)*40, 40);
-  //    blocks.add(block);
-  //    // Every three seconds make a block
-  //  }
-
-  // Handle Input
   handleInput();
 
-  // Update variables
-  update();
-
-  // Check Collision
   checkCollision();
+
+  update();
 
   // Render
   display();
@@ -111,6 +100,11 @@ void handleInput() {
   if (!keys[2] && !keys[3]) {
     hero.dx = 0;
   }
+
+  // Set hero velocity
+  hero.vx = hero.dx * hero.MOVESPEED;
+  hero.vy = hero.dy * hero.MOVESPEED;
+  
 }
 void keyPressed() {
   switch (keyCode) {
@@ -223,13 +217,9 @@ void checkCollision() {
   // Check player-block collision
   for (int i = 0; i < blocks.size (); i++) {
     block = blocks.get(i);
-
-    //Each block is only a candidate for collision if it's within 50 pixels of our hero
-    if (dist(hero.x + hero.w/2, hero.y + hero.h/2, block.x + block.w/2, block.y + block.h/2) < 50) {
-      // Check collision
-      if (hero.checkAABB(hero, block)) {
-        println(hero.sweptAABB(hero, block));
-      }
+    float m = hero.sweptAABB(hero, block);
+    if (m > 0 && m < 1) {
+      hero.slide (m);
     }
   }
 }

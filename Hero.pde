@@ -11,12 +11,12 @@ class Hero extends Entity {
   final int RADIUS = DIAMETER/2;
   final int w = DIAMETER;
   final int h = DIAMETER;
-  final float MOVESPEED = 4;
-
+  final float MOVESPEED = 3.9f;
   final float BULLET_SPEED = 8;
+  
   ArrayList<Bullet> bullets; 
 
-  boolean hit; // Stays true for about one second
+  boolean hit; // Stays when hit
   boolean moving; // Animates sprite when true
   boolean flipImage;
   float frameWhenHit; //Frame when the player was hit
@@ -72,7 +72,6 @@ class Hero extends Entity {
 
   // ---------- UPDATE VARIABLES AND POSITION --------------------
   void update() {
-    updateVelocity();
     updatePosition();
 
     // Update bullet coordinates
@@ -94,10 +93,7 @@ class Hero extends Entity {
     y = (y < 0) ? height : y;
     y = (y > height) ? 0 : y;
   }
-  void updateVelocity() {
-    vx = dx * MOVESPEED;
-    vy = dy * MOVESPEED;
-  }
+
   void updatePosition () {
     x += vx;
     y += vy;
@@ -126,16 +122,14 @@ class Hero extends Entity {
   // ----- DETECTION -----
   // Check if collision happened
   boolean checkAABB (Hero b1, Block b2)
-    {
-        return !(b1.x + b1.w < b2.x || b1.x > b2.x + b2.w || b1.y + b1.h < b2.y || b1.y > b2.y + b2.h);
-    }
- 
+  {
+    return !(b1.x + b1.w < b2.x || b1.x > b2.x + b2.w || b1.y + b1.h < b2.y || b1.y > b2.y + b2.h);
+  }
+
   // Returns time that collision occurred 
   float sweptAABB (Hero b1, Block b2) {
     float xInvEntry, yInvEntry;
     float xInvExit, yInvExit;
-    //    println("hero " + b1.x + ", " + b1.y + " velocity " + b1.vx + ", " + b1.vy + " w/h: " + b1.w + ", " + b1.h);
-    //    println("bloc " + b2.x + ", " + b2.y + " w/h: " + b2.w + ", " + b2.h);
 
     // find the distance between the objects on the near and far sides for both x and y
     if (b1.vx > 0.0f)
@@ -157,9 +151,6 @@ class Hero extends Entity {
       yInvEntry = (b2.y + b2.h) - b1.y;
       yInvExit = b2.y - (b1.y + b1.h);
     }
-    
-    println("xInvEntry and Exit: " + xInvEntry + ", " + xInvExit);
-    println("yInvEntry and Exit: " + yInvEntry + ", " + yInvExit);
 
     // find time of collision and time of exit for each axis 
     // (if statement is to prevent divide by zero)
@@ -185,20 +176,15 @@ class Hero extends Entity {
       yEntry = yInvEntry / b1.vy;
       yExit = yInvExit / b1.vy;
     }
-    
-    println("xEntry and Exit: " + xEntry + ", " + xExit);
-    println("yEntry and Exit: " + yEntry + ", " + yExit);
 
     // find the earliest/latest times of collision
     float entryTime = max(xEntry, yEntry);
     float exitTime = min(xExit, yExit);
-    
-    println("Entry and Exit times: " + entryTime + ", " + exitTime);
+
 
     // if there was no collision
     if (entryTime > exitTime || xEntry < 0.0f && yEntry < 0.0f || xEntry > 1.0f || yEntry > 1.0f)
     {
-      //println("entry time: " + entryTime + ", exit time: " + exitTime);
       normalx = 0.0f;
       normaly = 0.0f;
       return 1.0f;
@@ -230,16 +216,26 @@ class Hero extends Entity {
       }
 
       // return the time of collision
+      println("xInvEntry and Exit: " + xInvEntry + ", " + xInvExit);
+      println("yInvEntry and Exit: " + yInvEntry + ", " + yInvExit);
+      println("xEntry and Exit: " + xEntry + ", " + xExit);
+      println("yEntry and Exit: " + yEntry + ", " + yExit);
+      println("Entry and Exit times: " + entryTime + ", " + exitTime);
+      println("Normalx " + normalx + " Normaly " + normaly);
+
+      println(entryTime);
       return entryTime;
     }
   }
 
   // ----- RESOLVING COLLISION -----
-//  void slide (float collisionTime) {
-//    float dotprod = (vx * normaly + vy * normalx) * (1.0f - collisionTime);
-//    vx = dotprod * normaly;
-//    vy = dotprod * normalx;
-//  }
+    void slide (float collisionTime) {
+    float dotprod = (vx * normaly + vy * normalx) * (1.0f - collisionTime);
+    vx = dotprod * normaly;
+    vy = dotprod * normalx;
+    
+    println("new vx and vy " + vx + ", " + vy);
+  }
 
   // Sliding along wall
 }
