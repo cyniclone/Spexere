@@ -232,7 +232,8 @@ void checkCollision() {
         println("framecount " + frameCount);
         hero.x += hero.vx * ct;
         hero.y += hero.vy * ct;
-
+        
+        
         if (ct < 1.0f) {
           hero.slide(ct);
         }

@@ -13,6 +13,10 @@ class Hero extends Entity {
   float h = DIAMETER;
   final float MOVESPEED = 3.9f;
   final float BULLET_SPEED = 8;
+  
+  //Encapsulation
+  private float normalx;
+  private float normaly;
 
   ArrayList<Bullet> bullets; 
 
@@ -35,6 +39,8 @@ class Hero extends Entity {
     dy = 0;
     vx = 0;
     vy = 0;
+    normalx=0;
+    normaly=0;
 
     heroImg = loadImage("hero.png");
   }
@@ -118,8 +124,7 @@ class Hero extends Entity {
   // USING AXIS-ALIGNED BOUNDING BOX ALGORITHM
   // From gamedev.net
   // http://bit.ly/1wdxc7v
-  float normalx = 0;
-  float normaly = 0;
+  
 
   // ----- DETECTION -----
   // Check if collision happened
@@ -155,8 +160,8 @@ class Hero extends Entity {
     }
 
     //    println();
-    //    println("xInvEntry and Exit: " + xInvEntry + ", " + xInvExit);
-    //    println("yInvEntry and Exit: " + yInvEntry + ", " + yInvExit);
+    println("xInvEntry and Exit: " + xInvEntry + ", " + xInvExit);
+    println("yInvEntry and Exit: " + yInvEntry + ", " + yInvExit);
 
     // find time of collision and time of exit for each axis 
     // (if statement is to prevent divide by zero)
@@ -238,11 +243,29 @@ class Hero extends Entity {
 
   // ----- RESOLVING COLLISION -----
   void slide (float collisionTime) {
-    println("my normals are " + normalx + ", " + normaly);
+    //    println("my normals are " + normalx + ", " + normaly);
     float dotprod = (vx * normaly + vy * normalx) * (1.0f - collisionTime);
     vx = dotprod * normaly;
     vy = dotprod * normalx;
     println("new vx, vy: " + vx + ", " + vy);
   }
+}
+
+// ----- GETTERS AND SETTERS FOR NORMALS -----
+
+void setNormalx (float _normalx) {
+  this.normalx = _normalx;
+}
+
+float getNormalx() {
+  return normalx;  
+}
+
+void setNormaly (float normaly) {
+  this.normaly = normaly;
+}
+
+float getNormaly() {
+  return normaly;  
 }
 
