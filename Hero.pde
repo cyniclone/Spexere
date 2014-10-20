@@ -13,7 +13,7 @@ class Hero extends Entity {
   final int h = DIAMETER;
   final float MOVESPEED = 3.9f;
   final float BULLET_SPEED = 8;
-  
+
   ArrayList<Bullet> bullets; 
 
   boolean hit; // Stays when hit
@@ -153,16 +153,21 @@ class Hero extends Entity {
       yInvEntry = (b2.y + b2.h) - b1.y;
       yInvExit = b2.y - (b1.y + b1.h);
     }
+    println();
+    println("xInvEntry and Exit: " + xInvEntry + ", " + xInvExit);
+    println("yInvEntry and Exit: " + yInvEntry + ", " + yInvExit);
 
     // find time of collision and time of exit for each axis 
     // (if statement is to prevent divide by zero)
     float xEntry, yEntry;
     float xExit, yExit;
 
+
+
     if (b1.vx == 0.0f)
     {
-      xEntry = -tan(HALF_PI); // Negative infinity
-      xExit = tan(HALF_PI); // Positive infinity
+      xEntry = tan(HALF_PI); //Negative infinity
+      xExit = -tan(HALF_PI); //Positive infinity
     } else
     {
       xEntry = xInvEntry / b1.vx;
@@ -171,17 +176,23 @@ class Hero extends Entity {
 
     if (b1.vy == 0.0f)
     {
-      yEntry = -tan(HALF_PI);
-      yExit = tan(HALF_PI);
+      yEntry = tan(HALF_PI); //Negative infinity
+      yExit = -tan(HALF_PI); //Positive infinity
     } else
     {
       yEntry = yInvEntry / b1.vy;
       yExit = yInvExit / b1.vy;
     }
+    
+    println("xEntry and Exit: " + xEntry + ", " + xExit);
+    println("yEntry and Exit: " + yEntry + ", " + yExit);
+
 
     // find the earliest/latest times of collision
     float entryTime = max(xEntry, yEntry);
     float exitTime = min(xExit, yExit);
+
+    println("Entry and Exit times: " + entryTime + ", " + exitTime);
 
 
     // if there was no collision
@@ -232,7 +243,7 @@ class Hero extends Entity {
   }
 
   // ----- RESOLVING COLLISION -----
-    void slide (float collisionTime) {
+  void slide (float collisionTime) {
     float dotprod = (vx * normaly + vy * normalx) * (1.0f - collisionTime);
     vx = dotprod * normaly;
     vy = dotprod * normalx;

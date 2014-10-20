@@ -22,6 +22,7 @@ XML map1;
 
 // ----------- SETUP ---------------------------------
 void setup () {
+  frameRate(30);
   //Set up display
   size(800, 600); // Each map is 20 x 15 tiles
   background(50, 150, 50);
@@ -33,7 +34,7 @@ void setup () {
   keys = new boolean[4]; //Holds four keys
 
   //Make hero
-  hero = new Hero(10, 80, 40);
+  hero = new Hero(10, 79, 40);
 
   //Make some enemies
   enemies = new ArrayList<Enemy>();
@@ -73,7 +74,6 @@ void draw () {
   fill(0);
 
   handleInput();
-  //hero.vx = 1*hero.MOVESPEED;
 
   checkCollision();
 
