@@ -22,7 +22,7 @@ XML map1;
 
 // ----------- SETUP ---------------------------------
 void setup () {
-  frameRate(30);
+
   //Set up display
   size(800, 600); // Each map is 20 x 15 tiles
   background(50, 150, 50);
@@ -47,8 +47,8 @@ void setup () {
   blocks = new ArrayList<Block>();
 
   // Load map and draw blocks
-  //  map1 = loadXML("map1.xml");
-  map1 = loadXML("map0.xml");
+  map1 = loadXML("map1.xml");
+
 
   XML[] rows = map1.getChildren("row");
   for (int row = 0; row < rows.length; row++) {
@@ -222,29 +222,14 @@ void checkCollision() {
   // Check player-block collision
   for (int i = 0; i < blocks.size (); i++) {
     block = blocks.get(i);
-    
-    ct = hero.sweptAABB(hero, block);
-    
 
-   /* if (hero.checkAABB(hero, block)) {
-      if (hero.vx > 0) {
-        hero.x--;
-      } else if (hero.vx < 0) {
-        hero.x++;
-      } 
-      if (hero.vy > 0) {
-        hero.y--;
-      } else if (hero. vy < 0) {
-        hero.y++;
-      }
-      ct = hero.sweptAABB(hero, block);
-    }*/
+    ct = hero.sweptAABB(hero, block);
   }
   /*if (ct > 0 && ct < 1) {
-    hero.sliding = true;
-    if (hero.sliding) {
-      hero.slide(ct);
-    }
-  }*/
+   hero.sliding = true;
+   if (hero.sliding) {
+   hero.slide(ct);
+   }
+   }*/
 }
 

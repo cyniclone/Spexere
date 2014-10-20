@@ -153,9 +153,10 @@ class Hero extends Entity {
       yInvEntry = (b2.y + b2.h) - b1.y;
       yInvExit = b2.y - (b1.y + b1.h);
     }
-    println();
-    println("xInvEntry and Exit: " + xInvEntry + ", " + xInvExit);
-    println("yInvEntry and Exit: " + yInvEntry + ", " + yInvExit);
+    
+//    println();
+//    println("xInvEntry and Exit: " + xInvEntry + ", " + xInvExit);
+//    println("yInvEntry and Exit: " + yInvEntry + ", " + yInvExit);
 
     // find time of collision and time of exit for each axis 
     // (if statement is to prevent divide by zero)
@@ -184,15 +185,15 @@ class Hero extends Entity {
       yExit = yInvExit / b1.vy;
     }
     
-    println("xEntry and Exit: " + xEntry + ", " + xExit);
-    println("yEntry and Exit: " + yEntry + ", " + yExit);
+//    println("xEntry and Exit: " + xEntry + ", " + xExit);
+//    println("yEntry and Exit: " + yEntry + ", " + yExit);
 
 
     // find the earliest/latest times of collision
     float entryTime = max(xEntry, yEntry);
     float exitTime = min(xExit, yExit);
 
-    println("Entry and Exit times: " + entryTime + ", " + exitTime);
+//    println("Entry and Exit times: " + entryTime + ", " + exitTime);
 
 
     // if there was no collision
@@ -229,7 +230,7 @@ class Hero extends Entity {
       }
 
       // return the time of collision
-      println("vx and vy         : " + vx + ", " + vy);
+//      println("vx and vy         : " + vx + ", " + vy);
       println("xInvEntry and Exit: " + xInvEntry + ", " + xInvExit);
       println("yInvEntry and Exit: " + yInvEntry + ", " + yInvExit);
       println("xEntry and Exit: " + xEntry + ", " + xExit);
