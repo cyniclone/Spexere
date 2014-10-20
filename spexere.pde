@@ -9,13 +9,13 @@ Hero hero;
 Enemy enemy;
 Bullet bullet;
 Block block;
-float ct; // Collision time
 
 ArrayList<Enemy> enemies;
 ArrayList<Block> blocks;
 final int TILE = 40; // Pixels per tile unit
 
 boolean keys[]; // For handling input
+
 
 // Maps
 XML map1;
@@ -27,8 +27,6 @@ void setup () {
   size(800, 600); // Each map is 20 x 15 tiles
   background(50, 150, 50);
   smooth();
-
-  ct = 0;
 
   //Set up input handler
   keys = new boolean[4]; //Holds four keys
@@ -223,13 +221,24 @@ void checkCollision() {
   for (int i = 0; i < blocks.size (); i++) {
     block = blocks.get(i);
 
-    ct = hero.sweptAABB(hero, block);
+    // Only check blocks within 100 pixels
+    if (dist(block.x + block.w/2, block.y + block.h/2, hero.x + hero.w/2, hero.y + hero.h/2) < 81) {
+
+
+      Hero broadphasebox = getBroadphaseBox(hero);
+      if (hero.checkAABB(broadphasebox, block)) {
+
+        float ct = hero.sweptAABB(hero, block); // Collision time
+        println("framecount " + frameCount);
+        hero.x += hero.vx * ct;
+        hero.y += hero.vy * ct;
+
+        if (ct < 1.0f) {
+          hero.slide(ct);
+        }
+        i = 9999;
+      }
+    }
   }
-  /*if (ct > 0 && ct < 1) {
-   hero.sliding = true;
-   if (hero.sliding) {
-   hero.slide(ct);
-   }
-   }*/
 }
 
