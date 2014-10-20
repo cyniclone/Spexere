@@ -19,6 +19,7 @@ class Hero extends Entity {
   boolean hit; // Stays when hit
   boolean moving; // Animates sprite when true
   boolean flipImage;
+  boolean sliding;
   float frameWhenHit; //Frame when the player was hit
   float vx, vy; // Velocity
   int dx, dy; // Direction
@@ -30,6 +31,7 @@ class Hero extends Entity {
     hit = false;
     moving = false;
     flipImage = false;
+    sliding = false;
 
     dx = 0;
     dy = 0;
@@ -216,6 +218,7 @@ class Hero extends Entity {
       }
 
       // return the time of collision
+      println("vx and vy         : " + vx + ", " + vy);
       println("xInvEntry and Exit: " + xInvEntry + ", " + xInvExit);
       println("yInvEntry and Exit: " + yInvEntry + ", " + yInvExit);
       println("xEntry and Exit: " + xEntry + ", " + xExit);
@@ -233,8 +236,9 @@ class Hero extends Entity {
     float dotprod = (vx * normaly + vy * normalx) * (1.0f - collisionTime);
     vx = dotprod * normaly;
     vy = dotprod * normalx;
-    
+    println("I'm sliding");
     println("new vx and vy " + vx + ", " + vy);
+    sliding = false;
   }
 
   // Sliding along wall
