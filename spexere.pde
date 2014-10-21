@@ -5,6 +5,8 @@
  AUDIO LASER SOUND : http://soundjax.com
  SWEPT AABB        : http://www.gamedev.net/page/resources/_/technical/
                      game-programming/swept-aabb-collision-detection-and-response-r3084
+ GRASS TILE        : USER SURFACECURVE FROM OPENGAMEART
+                     http://opengameart.org/content/grass-textureseamless-2d
  
  */ 
 import ddf.minim.*;  // For audio playback
@@ -13,35 +15,40 @@ AudioPlayer ap;
 
 boolean game; // Game state: False means game-over
 
+PImage grass; // Background tile
+
 // Basic actors/objects
 Hero hero;
 Enemy enemy;
 Bullet bullet;
 Block block;
 
-// For handling level-changing
-final int NUM_LEVELS = 5;
-int currentLevel;
-int goalX, goalY;
-final int GOALSIZE = 30;
-
+// ArrayLists
 ArrayList<Enemy> enemies;
 ArrayList<Block> blocks;
 ArrayList<Explosion> explosions = new ArrayList<Explosion>();
 
+// For handling level-changing
 final int TILE = 40; // Pixels per tile unit
+final int NUM_LEVELS = 5;
+int currentLevel;
+XML[] maps = new XML [NUM_LEVELS];
+
+int goalX, goalY;
+final int GOALSIZE = 30;
 
 boolean keys[]; // For handling input
 
 
-// Maps
-XML[] maps = new XML [NUM_LEVELS];
 
 // ----------- SETUP ---------------------------------
 void setup () {
   //Load audio playback
   minim = new Minim(this);
   ap = minim.loadFile("laser.wav"); // Got this from soundJax
+  
+  //Load background image
+  grass = loadImage("grass.png");
 
   //Set up display
   size(800, 600); // Each map is 20 x 15 tiles
@@ -70,7 +77,7 @@ void setup () {
 
 void draw () {
   if (game) {
-    background(50, 150, 50);
+    //background(50, 150, 50);
     rectMode(CORNER);
     stroke(200);
     fill(0);
@@ -79,6 +86,7 @@ void draw () {
     checkCollision();
     update();
     display();
+    
   } else {
     rectMode(CENTER);
     fill(80);
@@ -189,6 +197,12 @@ void update() {
 }
 // ---------- DISPLAY METHOD ---------------------------------
 void display() {
+  //Display grass
+  for (int column = 0; column < width; column += TILE) {
+    for (int row = 0; row < height; row += TILE) {
+      image(grass, column, row);  
+    }
+  }
 
   //Display blocks
   for (int i = 0; i < blocks.size (); i++) {
