@@ -4,23 +4,25 @@
  FOR INPUT HANDLING: http://processing.org/discourse/beta/num_1139256015.html
  
  */
- 
+
 boolean game; // Game state: False means game-over
 
+// Basic actors/objects
 Hero hero;
 Enemy enemy;
 Bullet bullet;
 Block block;
 
+// For handling level-changing
 final int NUM_LEVELS = 5;
 int currentLevel;
-
-// Coordinates for level goal
 int goalX, goalY;
 final int GOALSIZE = 30;
 
 ArrayList<Enemy> enemies;
 ArrayList<Block> blocks;
+ArrayList<Explosion> explosions = new ArrayList<Explosion>();
+
 final int TILE = 40; // Pixels per tile unit
 
 boolean keys[]; // For handling input
@@ -58,19 +60,30 @@ void setup () {
 // ----------- DRAW ---------------------------------
 
 void draw () {
-  background(50, 150, 50);
-  rectMode(CORNER);
+  if (game) {
+    background(50, 150, 50);
+    rectMode(CORNER);
+    stroke(200);
+    fill(0);
 
-  stroke(200);
-  fill(0);
-
-  handleInput();
-
-  checkCollision();
-
-  update();
-
-  display();
+    handleInput();
+    checkCollision();
+    update();
+    display();
+  } else {
+    rectMode(CENTER);
+    fill(80);
+    stroke(#FAE119);
+    rect(width/2, height/2, TILE*12, TILE*8);
+    fill(#FAE119);
+    textAlign(CENTER);
+    textSize(32);
+    text("YOU DIED", width/2, height/2);
+    textSize(24);
+    text("Press the space bar to reset, stupid.", width/2, height/2 + TILE);
+    textSize(10);
+    text("You are bad at video games.", width/2, height/2 + TILE*2);
+  }
 }
 
 
@@ -116,6 +129,15 @@ void keyPressed() {
     keys[3] = true;
     break;
   }
+
+  // To reset the game
+  if (!game) {
+    switch (key) {
+    case ' ':
+      setup();
+      break;
+    }
+  }
 }
 void keyReleased() {
   switch (keyCode) {
@@ -149,7 +171,6 @@ void mousePressed() {
 // ----------- GAME LOOP METHODS ----------------------------
 
 void update() {
-  //Update hero
   hero.update();
 
   // Update each enemy
@@ -175,6 +196,16 @@ void display() {
   //Display hero
   hero.display();
 
+  //Display any explosions
+  for (int i = 0; i < explosions.size (); i++) {
+    Explosion exp = explosions.get(i);
+    exp.plus();
+    exp.display();
+    if (exp.finished()) {
+      explosions.remove(i);
+    }
+  }
+
   //Display goal
   fill(frameCount * 5 % 255, frameCount * 3 % 255, frameCount * 7 % 255);
   ellipse (goalX, goalY, GOALSIZE, GOALSIZE);
@@ -192,7 +223,11 @@ void checkCollision() {
       if (dist(bullet.x, bullet.y, enemy.x, enemy.y) < bullet.DIAMETER/2 + enemy.DIAMETER/2)
       {
 
-        //remove enemy and bullet from arraylist
+        // Create an explosion
+        Explosion explosion = new Explosion(enemy.x, enemy.y);
+        explosions.add(explosion);
+
+        // Remove enemy and bullet from arraylist
         if (enemies.size() > 0) {
           enemies.remove(j);
         }
@@ -207,7 +242,7 @@ void checkCollision() {
   for (int i = 0; i < enemies.size (); i++) {
     enemy = enemies.get(i);
     if (dist(hero.x + hero.RADIUS, hero.y + hero.RADIUS, enemy.x, enemy.y) < hero.RADIUS + enemy.DIAMETER/2) {
-      println("player hit");
+      game = false;
     }
   }
 
