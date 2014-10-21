@@ -9,10 +9,8 @@ class Hero extends Entity {
   boolean playLaserWav = false;
   int count = 0;
 
-  final int DIAMETER = TILE;
-  final int RADIUS = DIAMETER/2;
-  float w = DIAMETER;
-  float h = DIAMETER;
+  float w = TILE;
+  float h = TILE;
   final float MOVESPEED = 3.9f;
   final float BULLET_SPEED = 8;
 
@@ -47,7 +45,7 @@ class Hero extends Entity {
     // Shadow beneath sprite
     fill (60, 60, 60, 100);
     noStroke();
-    ellipse(x + RADIUS, y + 30, 35, 20);
+    ellipse(x + w/2, y + 30, 35, 20);
 
     // Animates sprite based on velocity
     if (vx != 0 || vy != 0) {
@@ -126,7 +124,7 @@ class Hero extends Entity {
     // To convert from polar to Cartesian
 
     //float d = dist(x, y, mouseX, mouseY)*.01;
-    Bullet b = new Bullet(x + RADIUS, y + RADIUS, BULLET_SPEED*cos(t), BULLET_SPEED*-sin(t));
+    Bullet b = new Bullet(x + w/2, y + h/2, BULLET_SPEED*cos(t), BULLET_SPEED*-sin(t));
     if (bullets.size() < 5) {
       bullets.add(b);
     }
