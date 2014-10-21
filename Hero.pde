@@ -176,9 +176,6 @@ class Hero extends Entity {
       yInvExit = b2.y - (b1.y + b1.h);
     }
 
-    //    //    println();
-
-
     // find time of collision and time of exit for each axis 
     // (if statement is to prevent divide by zero)
     float xEntry, yEntry;
@@ -253,9 +250,9 @@ class Hero extends Entity {
       }
 
 
-      println("xInvEntry and Exit: " + xInvEntry + ", " + xInvExit);
-      println("yInvEntry and Exit: " + yInvEntry + ", " + yInvExit);
-      println("Collision time: " + entryTime);
+//      println("xInvEntry and Exit: " + xInvEntry + ", " + xInvExit);
+//      println("yInvEntry and Exit: " + yInvEntry + ", " + yInvExit);
+//      println("Collision time: " + entryTime);
       return entryTime;
     }
   }
@@ -263,11 +260,11 @@ class Hero extends Entity {
   // ----- RESOLVING COLLISION -----
   void slide (float collisionTime) {
 
-    println("my normals are " + normalx + ", " + normaly);
+//    println("my normals are " + normalx + ", " + normaly);
     float dotprod = (vx * normaly + vy * normalx) * (1.0f - collisionTime);
     vx = dotprod * normaly;
     vy = dotprod * normalx;
-    println("new vx, vy: " + vx + ", " + vy);
+//    println("new vx, vy: " + vx + ", " + vy);
   }
 }
 
