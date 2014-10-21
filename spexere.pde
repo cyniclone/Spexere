@@ -95,7 +95,7 @@ void draw () {
     fill(#FAE119);
     textAlign(CENTER);
     textSize(32);
-    text("YOU DIED", width/2, height/2);
+    text("YOU FUCKING DIED", width/2, height/2);
     textSize(24);
     text("Press the space bar to reset, stupid.", width/2, height/2 + TILE);
     textSize(10);
