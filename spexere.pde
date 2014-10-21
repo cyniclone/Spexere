@@ -4,6 +4,8 @@
  FOR INPUT HANDLING: http://processing.org/discourse/beta/num_1139256015.html
  
  */
+ 
+boolean game; // Game state: False means game-over
 
 Hero hero;
 Enemy enemy;
@@ -35,9 +37,8 @@ void setup () {
   background(50, 150, 50);
   smooth();
 
-  // Initialize arrays
-  //  enemies = new ArrayList<Enemy>();
-  //  blocks = new ArrayList<Block>();
+  // Set game state
+  game = true;
 
   // Set up input handler
   keys = new boolean[4]; //Holds four keys
@@ -75,7 +76,6 @@ void draw () {
 
 //  ----------- INPUT HANDLING ---------------------------------
 void handleInput() {
-  // For our array:
   // keys[0] = UP, [1] = DOWN, [2] = LEFT, and [3] = RIGHT
 
   if (keys[0]) {
@@ -236,7 +236,7 @@ void checkCollision() {
   // Check if player finished goal
   if (frameCount % 2 == 0) {
     if (dist (hero.x + hero.w/2, hero.y + hero.h/2, goalX, goalY) < GOALSIZE) {
-      println("you reached the next level");
+      endLevel();
     }
   }
 }
@@ -281,11 +281,12 @@ void loadLevel(int levelNum) {
 }
 
 void endLevel () {
-  if (currentLevel < NUM_LEVELS) {
+  if (currentLevel < NUM_LEVELS-1) {
     currentLevel++;
     loadLevel(currentLevel);
   } else {
-    // Finished game
+    currentLevel = 0;
+    loadLevel(currentLevel);
   }
 }
 
