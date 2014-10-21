@@ -68,6 +68,10 @@ class Hero extends Entity {
     for (int i = 0; i < bullets.size (); i++) {
       bullets.get(i).display();
     }
+    
+    //Display light
+    fill (255, frameCount * 11 % 255, frameCount * 11 % 255);
+    ellipse(x + w/2, y + h/2, 5, 5);
   }
 
   // ---------- UPDATE VARIABLES AND POSITION --------------------
@@ -97,7 +101,6 @@ class Hero extends Entity {
   }
 
   void updatePosition () {
-    println("updating position with vx/vy: " + vx + ", " + vy);
     x += vx;
     y += vy;
   }

@@ -11,10 +11,11 @@ Bullet bullet;
 Block block;
 
 final int NUM_LEVELS = 5;
-int currentLevel = 0;
+int currentLevel;
 
 // Coordinates for level goal
 int goalX, goalY;
+final int GOALSIZE = 30;
 
 ArrayList<Enemy> enemies;
 ArrayList<Block> blocks;
@@ -49,7 +50,8 @@ void setup () {
   maps[4] = loadXML("map4.xml");
 
   // Load first level
-  loadLevel(0);
+  currentLevel = 0;
+  loadLevel(currentLevel);
 
 
   //Make hero
@@ -207,7 +209,7 @@ void display() {
   
   //Display goal
   fill(frameCount * 5 % 255, frameCount * 3 % 255, frameCount * 7 % 255);
-  ellipse (goalX, goalY, 30, 30);
+  ellipse (goalX, goalY, GOALSIZE, GOALSIZE);
 }
 // ---------- CHECK COLLISION ---------------------------------
 void checkCollision() {
@@ -229,10 +231,6 @@ void checkCollision() {
         if (hero.bullets.size() > 0) {
           hero.bullets.remove(i);
         }
-
-        //        // Add a new enemy
-        //        enemy = new Enemy(5, 500, 300 + random(0, 200));
-        //        enemies.add(enemy);
       }
     }
   }
@@ -265,6 +263,11 @@ void checkCollision() {
         i = 9999;
       }
     }
+  }
+  
+  // Check if player finished goal
+  if (dist (hero.x + hero.w/2, hero.y + hero.h/2, goalX, goalY) < GOALSIZE) {
+    println("you reached the next level");
   }
 }
 // ----- LEVEL MANAGEMENT -------------------------
