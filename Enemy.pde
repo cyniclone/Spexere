@@ -11,22 +11,25 @@
 
 class Enemy extends Entity {
   PShape bat;
+  color c;
   
   final int DIAMETER = 50;
-  final float MOVESPEED = 0.1; //Change to 2 later
+  final float MOVESPEED = 2.0f;
   
-  float wanderX = random(-2, 2);
-  float wanderY = random(-2, 2);
+  float wanderX = random(-1.5, 1.5);
+  float wanderY = random(-1.5, 1.5);
 
   Enemy (int hp, float x, float y) {
     super (hp, x, y);
     bat = loadShape("bat.svg");
     bat.disableStyle();
+    
+    c = color(random(200), random(100), random(100, 200));
   }
   
 // ---------- DISPLAY METHOD ---------------------------------
   void display () {
-    fill (150, 40, 40);
+    fill (c);
     shapeMode(CENTER);
     shape(bat, x, y, DIAMETER, DIAMETER);
   }

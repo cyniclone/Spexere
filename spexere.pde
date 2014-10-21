@@ -36,8 +36,8 @@ void setup () {
   smooth();
 
   // Initialize arrays
-//  enemies = new ArrayList<Enemy>();
-//  blocks = new ArrayList<Block>();
+  //  enemies = new ArrayList<Enemy>();
+  //  blocks = new ArrayList<Block>();
 
   // Set up input handler
   keys = new boolean[4]; //Holds four keys
@@ -52,38 +52,6 @@ void setup () {
   // Load first level
   currentLevel = 0;
   loadLevel(currentLevel);
-
-
-  //Make hero
-  // hero = new Hero(10, 79, 40);
-
-  //Make some enemies
-//  enemies = new ArrayList<Enemy>();
-//  for (int i = 1; i <= 5; i++) {
-//    enemy = new Enemy(5, 500, i*100 + random(0, 200));
-//    enemies.add(enemy);
-//  }
-
-  // Initialize blocks
-  
-
-  //  // Load map and draw blocks
-  //  map1 = loadXML("map1.xml");
-  //
-  //  // Load map
-  //  XML[] rows = map1.getChildren("row");
-  //  for (int row = 0; row < rows.length; row++) {
-  //    String s = rows[row].getContent();
-  //    for (int column = 0; column < s.length (); column++) {
-  //      if (s.charAt(column) == '@') {
-  //
-  //        // Make a block
-  //        block = new Block (column*TILE, row*TILE, TILE); 
-  //        blocks.add(block);
-  //      }
-  //    }
-  //  }
-  // } End make level
 }
 
 // ----------- DRAW ---------------------------------
@@ -191,7 +159,7 @@ void update() {
 }
 // ---------- DISPLAY METHOD ---------------------------------
 void display() {
-  
+
   //Display blocks
   for (int i = 0; i < blocks.size (); i++) {
     if (blocks.size() > 0) {
@@ -203,10 +171,10 @@ void display() {
   for (int i = 0; i < enemies.size (); i++) {
     enemies.get(i).display();
   }
-  
+
   //Display hero
   hero.display();
-  
+
   //Display goal
   fill(frameCount * 5 % 255, frameCount * 3 % 255, frameCount * 7 % 255);
   ellipse (goalX, goalY, GOALSIZE, GOALSIZE);
@@ -264,17 +232,20 @@ void checkCollision() {
       }
     }
   }
-  
+
   // Check if player finished goal
-  if (dist (hero.x + hero.w/2, hero.y + hero.h/2, goalX, goalY) < GOALSIZE) {
-    println("you reached the next level");
+  if (frameCount % 2 == 0) {
+    if (dist (hero.x + hero.w/2, hero.y + hero.h/2, goalX, goalY) < GOALSIZE) {
+      println("you reached the next level");
+    }
   }
 }
+
 // ----- LEVEL MANAGEMENT -------------------------
 void loadLevel(int levelNum) {
   XML map = maps[levelNum];
   XML[] rows = map.getChildren("row");
-  
+
   // Initialize block array
   blocks = new ArrayList<Block>();
   enemies = new ArrayList<Enemy>();
@@ -299,7 +270,7 @@ void loadLevel(int levelNum) {
         Enemy enemy = new Enemy (1, column*TILE, row*TILE);
         enemies.add(enemy);
       }
-      
+
       if (s.charAt(column) == 'g') {
         // Set goal-point
         goalX = column*TILE;
@@ -311,12 +282,10 @@ void loadLevel(int levelNum) {
 
 void endLevel () {
   if (currentLevel < NUM_LEVELS) {
-  currentLevel++;
+    currentLevel++;
     loadLevel(currentLevel);
   } else {
     // Finished game
   }
-    
-  
 }
 

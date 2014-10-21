@@ -1,4 +1,12 @@
+ /* CITATION 
+ CC - SPRITE ASSET
+ DESIGN BY MARTA NOWACZYK OF
+ www.ifu.deviantart.com.
+ opengameart.org
+ */
+
 class Block {
+  PImage img;
   float x, y;
   float w, h;
   float side; // Side length
@@ -6,6 +14,8 @@ class Block {
   
 
   Block (float x, float y, int side) {
+    img = loadImage("block.png");
+    
     this.x = x;
     this.y = y;
     this.side = side;
@@ -19,10 +29,13 @@ class Block {
   }
 // ---------- DISPLAY METHOD ---------------------------------
   void display () {
-    rectMode(CORNER);
-    fill(0, 0, 255, 200);
-    stroke(255);
-    rect(x, y, side, side);
+    //rectMode(CORNER);
+    //fill(0, 0, 255, 200);
+    //stroke(255);
+    //rect(x, y, side, side);
+    
+    imageMode(CORNER);
+    image(img, x, y, side, side);
   }
 }
 
