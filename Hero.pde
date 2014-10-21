@@ -6,6 +6,8 @@
 
 class Hero extends Entity {
   PImage heroImg;
+  boolean playLaserWav = false;
+  int count = 0;
 
   final int DIAMETER = TILE;
   final int RADIUS = DIAMETER/2;
@@ -36,6 +38,7 @@ class Hero extends Entity {
     vx = 0;
     vy = 0;
 
+    count=0;
     heroImg = loadImage("hero.png");
   }
 
@@ -68,7 +71,7 @@ class Hero extends Entity {
     for (int i = 0; i < bullets.size (); i++) {
       bullets.get(i).display();
     }
-    
+
     //Display light
     fill (255, frameCount * 11 % 255, frameCount * 11 % 255);
     ellipse(x + w/2, y + h/2, 5, 5);
@@ -98,6 +101,17 @@ class Hero extends Entity {
     x = (x > width) ? 0 : x;
     y = (y < 0) ? height : y;
     y = (y > height) ? 0 : y;
+
+    // Play laser sound
+    if (playLaserWav) {
+      count++;
+      ap.play();
+      if (count > 10) {
+        playLaserWav = false;
+        count = 0;
+        ap.rewind();
+      }
+    }
   }
 
   void updatePosition () {
@@ -115,6 +129,10 @@ class Hero extends Entity {
     Bullet b = new Bullet(x + RADIUS, y + RADIUS, BULLET_SPEED*cos(t), BULLET_SPEED*-sin(t));
     if (bullets.size() < 5) {
       bullets.add(b);
+    }
+
+    if (count == 0) {
+      playLaserWav = true;
     }
   }
 

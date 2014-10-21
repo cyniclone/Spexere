@@ -2,8 +2,14 @@
 /* WORKS CITED
  
  FOR INPUT HANDLING: http://processing.org/discourse/beta/num_1139256015.html
+ AUDIO LASER SOUND : http://soundjax.com
+ SWEPT AABB        : http://www.gamedev.net/page/resources/_/technical/
+                     game-programming/swept-aabb-collision-detection-and-response-r3084
  
- */
+ */ 
+import ddf.minim.*;  // For audio playback
+Minim minim;
+AudioPlayer ap;
 
 boolean game; // Game state: False means game-over
 
@@ -33,6 +39,9 @@ XML[] maps = new XML [NUM_LEVELS];
 
 // ----------- SETUP ---------------------------------
 void setup () {
+  //Load audio playback
+  minim = new Minim(this);
+  ap = minim.loadFile("laser.wav"); // Got this from soundJax
 
   //Set up display
   size(800, 600); // Each map is 20 x 15 tiles
