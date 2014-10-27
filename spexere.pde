@@ -1,3 +1,6 @@
+/* @pjs preload="block.png, grass.png, hero.png"; 
+ */
+
 //NICOLAS AGUIRRE MIDTERM
 /* WORKS CITED
  
@@ -51,6 +54,7 @@ void setup () {
   grass = loadImage("grass.png");
 
   //Set up display
+  
   size(800, 600); // Each map is 20 x 15 tiles
   background(50, 150, 50);
   smooth();
